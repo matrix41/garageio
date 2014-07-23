@@ -1,0 +1,115 @@
+
+
+
+needs to be a rails app
+need a db to save stuff
+make user accounts (bonus)
+
+by sunday night 10 PM : email greg/bobby a proposal of what you want to do (semi-detailed)
+
+
++-------+     +-------+
+|       |     |       |
+| Rails |     | model | --> SQL
+|       |     |       |
++-------+     +-------+
+
+
+rails new garageio
+cd garageio
+git init
+git add -A
+git status
+git commit -m 'Initial commit'
+git status (should say: working status clean)
+
+
+rails generate model car make:string model:string year:string (one model per table)
+rake db:migrate (tells DB to make/setup the table)
+rails console 
+Rails.env
+Car
+Car.all
+Car.first
+Car.create({ make: 'Tesla', model: 'Roadster', year: 2014})
+Car.last
+cars = Car.all
+cars
+cars.each do |car|
+puts car.make
+end
+
+cars.each do |car|
+puts car['make']
+end
+
+Car.create({make: 'Toyota', model: 'Corolla', year: 2011})
+Car.last
+exit
+
+<right click delete that .rb file in db>
+
+<open migration file in db/migrate and add string: name>
+look at schema.db to verify
+Car.create({ make: 'Toyota', model: 'Corolla', year: 2011, name: 'Gloria'})
+
+rails console
+reload!
+exit
+
+rails generate model motorcycle make:string model:string mileage:integer engine:string year:integer
+rake db:migrate
+rails console
+
+Motorcycle.create( {make:'BMW', model:'R1200', mileage:5188, engine: "1170cc", year:2009, })
+begin transaction
+commit transaction
+
+select "cars".* from "cars" where "cars"."id" = ? limit 1 [["ID", 1]]
+
+CARS.UPDATE({YEAR:2001})
+Car.update({'year'=>2001})
+begin transaction
+commit transaction
+Car.inspect
+
+rails server
+
+<edit config/routes.rb>
+Rails.application.routes.draw do (routes.rb)
+  get '/cars' ==> 'cars#index'
+end
+
+class CarsController < Application::Base (in cars_controller.rb)
+{
+	def index
+      @cars = Car.all
+	end
+}
+
+create views/cars/index.html.erb
+<h2>Cars</h2>
+<ul>
+	<%= @cars.each do |car| %>
+	  <%= car.inspect %>
+	  <li><%= car.make %> <%= car.model %></li>
+	<% end %>
+</ul>
+
+layout file, add <h1>Welcome to GarageIO</h1> 
+between body tags
+
+getbootstrap.com/getting-started
+copy/paste bootstrap CDN in layout file in app/views/layouts/applications.html.erb
+
+
+[
+class Car < ActiveRecord::Base
+end
+]
+
+
+migration file --> instructions (migration files actually changes the DB)
+schema --> result (helps you see what the DB looks like; don't delete the schema)
+
+SQLite Professional Read-Only
